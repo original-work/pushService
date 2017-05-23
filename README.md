@@ -1,6 +1,6 @@
 #PushService
 
-²¿ÊğÎ»ÖÃ
+éƒ¨ç½²ä½ç½®
 /home/pushservice_fat.jar
 /home/log/info.log
 /home/ssl/push.p12
