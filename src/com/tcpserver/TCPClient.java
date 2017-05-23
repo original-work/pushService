@@ -8,9 +8,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import org.apache.log4j.Logger;
+
 
 public class TCPClient {
-
+	final Logger log = Logger.getLogger(TCPClient.class);
 	int port = 2345; // 端口号
 	String host = "localhost"; // 服务器地址
 	Socket socket; // 客户端套接字
@@ -34,7 +36,7 @@ public class TCPClient {
 			System.out.println("Connect Success!");
 			socket.close(); // 关闭套接字
 		} catch (IOException ex) {
-			ex.printStackTrace(); // 输出错误信息
+			log.error(ex.toString()); // 输出错误信息
 		}
 	}
 

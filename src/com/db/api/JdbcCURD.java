@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.log4j.Logger;
 import com.db.driver.JdbcUtils;
 
 public class JdbcCURD {
@@ -14,25 +15,38 @@ public class JdbcCURD {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+    final Logger log = Logger.getLogger(JdbcCURD.class);
+    
+    public void init(){
+    	try {
+            connection = JdbcUtils.getConnection();
+        } catch (SQLException e) {
+            log.error(e.toString());
+        }
+    }
+    
+    public void closeConnection(){
+    	JdbcUtils.releaseResources(resultSet, statement, connection);
+    }
 
     //更新操作
     public void update(String sql) {
         try {
-            connection = JdbcUtils.getConnection();
+//            connection = JdbcUtils.getConnection();
             statement = connection.createStatement();
             //可执行创建、修改、删除表，添加、删除、修改元组以及查询sql语句
             statement.execute(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } finally {
-            JdbcUtils.releaseResources(resultSet, statement, connection);
+//            JdbcUtils.releaseResources(resultSet, statement, connection);
         }
     }
     
     //查询操作
     public void Query(String sql) {
         try {
-            connection = JdbcUtils.getConnection();
+//            connection = JdbcUtils.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             
@@ -42,9 +56,9 @@ public class JdbcCURD {
             }
             
         } catch (SQLException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } finally {
-            JdbcUtils.releaseResources(resultSet, statement, connection);
+//            JdbcUtils.releaseResources(resultSet, statement, connection);
         }
     }
     
@@ -52,7 +66,7 @@ public class JdbcCURD {
   //查询操作
     public String QueryMdn(String sql) {
         try {
-            connection = JdbcUtils.getConnection();
+//            connection = JdbcUtils.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
@@ -60,9 +74,9 @@ public class JdbcCURD {
             	return token;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } finally {
-            JdbcUtils.releaseResources(resultSet, statement, connection);
+//            JdbcUtils.releaseResources(resultSet, statement, connection);
         }
         return null;
     }

@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import org.apache.log4j.Logger;
+
 
 
 public class UDPClient {
-	
+	final static Logger log = Logger.getLogger(UDPClient.class);
 	private DatagramSocket sock;
 	private DatagramPacket pack;
 	private InetSocketAddress server;
@@ -27,7 +29,7 @@ public class UDPClient {
 			String res=new String(pack.getData());
 			System.out.println(res);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.toString());
 		}
 	}
 	

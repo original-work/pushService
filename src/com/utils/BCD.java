@@ -4,45 +4,7 @@
 package com.utils;
 
 public class BCD {
-
-//    public static byte[] DecimalToBCD(long num) {
-//        int digits = 0;
-//
-//        long temp = num;
-//        while (temp != 0) {
-//            digits++;
-//            temp /= 10;
-//        }
-//
-//        int byteLen = digits % 2 == 0 ? digits / 2 : (digits + 1) / 2;
-//
-//        byte bcd[] = new byte[byteLen];
-//
-//        for (int i = 0; i < digits; i++) {
-//            byte tmp = (byte) (num % 10);
-//
-//            if (i % 2 == 0) {
-//                bcd[i / 2] = tmp;
-//            } else {
-//                bcd[i / 2] |= (byte) (tmp << 4);
-//            }
-//
-//            num /= 10;
-//        }
-//
-//        for (int i = 0; i < byteLen / 2; i++) {
-//            byte tmp = bcd[i];
-//            bcd[i] = bcd[byteLen - i - 1];
-//            bcd[byteLen - i - 1] = tmp;
-//        }
-//
-//        return bcd;
-//    }
-//
-//    public static long BCDToDecimal(byte[] bcd) {
-//        return Long.valueOf(BCD.BCDtoString(bcd));
-//    }
-    
+   
     public static String BCDtoString(byte bcd,int len) {
         StringBuffer sb = new StringBuffer();
         

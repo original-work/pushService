@@ -12,13 +12,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 public class JdbcUtils {
 
     private static String driverName;
     private static String url;
     private static String user;
     private static String password;
-
+    final static Logger log = Logger.getLogger(JdbcUtils.class);
     /*
      * 静态代码块，类初始化时加载数据库驱动
      */
@@ -41,9 +43,9 @@ public class JdbcUtils {
             Class.forName(driverName);
             
         } catch (IOException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         }
     }
 
@@ -66,21 +68,21 @@ public class JdbcUtils {
             if (resultSet != null)
                 resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } finally {
             resultSet = null;
             try {
                 if (statement != null)
                     statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+            	log.error(e.toString());
             } finally {
                 statement = null;
                 try {
                     if (connection != null)
                         connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                	log.error(e.toString());
                 } finally {
                     connection = null;
                 }

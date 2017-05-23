@@ -11,10 +11,13 @@ import java.net.SocketException;
 
 import org.apache.log4j.Logger;
 
+import com.db.api.JdbcCURD;
+
 public class UDPServer{
-	final Logger log = Logger.getLogger(UDPServer.class);
+	final static Logger log = Logger.getLogger(UDPServer.class);
 
 	private DatagramPacket pack;
+	private JdbcCURD curd;
 	
 	public UDPServer(){
 		try{
@@ -24,11 +27,11 @@ public class UDPServer{
 					byte[] bufferIn=new byte[1024];
 					pack=new DatagramPacket(bufferIn, bufferIn.length);
 					receive(pack);
-					new Thread(new Process(pack)).start(); 
+					new Thread(new Process(pack,curd)).start(); 
 				}catch (IOException e) {
 					e.printStackTrace();
 				}
-				Thread.sleep(1 * 1000);  
+//				Thread.sleep(1 * 1000);  
 			}
 		}catch (Exception e) {  
             e.printStackTrace();  
@@ -46,7 +49,8 @@ public class UDPServer{
             datagramSocket.receive(packet);  
             return packet;  
         } catch (Exception e) {  
-            throw e;  
+        	log.error(e.toString());
+        	throw e;
         }  
     }  
     /** 
@@ -58,23 +62,25 @@ public class UDPServer{
         try {  
             datagramSocket.send(packet);  
         } catch (Exception e) {  
-            e.printStackTrace();  
+        	log.error(e.toString());
         }  
     }  
     /** 
      * 初始化连接 
      * @throws SocketException 
      */  
-    public static void init(){  
+    public void init(){  
         try {  
             socketAddress = new InetSocketAddress("localhost", 12345);  
-            datagramSocket = new DatagramSocket(socketAddress);  
-//            datagramSocket.setSoTimeout(5 * 1000);  
-            System.out.println("server has started");  
+            datagramSocket = new DatagramSocket(socketAddress);
+            curd=new JdbcCURD();
+            curd.init();
+//            datagramSocket.setSoTimeout(5 * 1000);
+            log.info("server has started");
         } catch (Exception e) {  
-            datagramSocket = null;  
-            System.err.println("server start fail");  
-            e.printStackTrace();  
+            datagramSocket = null;
+            log.info("server start fail");
+            log.error(e.toString());
         }  
     }  
     private static InetSocketAddress socketAddress = null; // 服务监听个地址  

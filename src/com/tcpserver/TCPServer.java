@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TCPServer {
+import org.apache.log4j.Logger;
 
+public class TCPServer {
+	final Logger log = Logger.getLogger(TCPServer.class);
 	int port = 2345; // 端口号
 	ServerSocket serverSocket; // 服务器套接字
 
@@ -42,7 +44,7 @@ public class TCPServer {
 //				out.flush();
 			}
 		} catch (IOException ex) {
-			ex.printStackTrace(); // 输出错误信息
+			log.error(ex.toString()); // 输出错误信息
 		}
 	}
 
